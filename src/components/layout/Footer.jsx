@@ -1,9 +1,11 @@
-import React, {FC} from 'react';
+import React from 'react';
+import Typography from "@mui/material/Typography";
 
-const Footer:FC = () => {
+const Footer = () => {
     return (
-        <div>
-        </div>
+        <footer>
+            <Typography variant="h6" align="center" gutterBottom>footer</Typography>
+        </footer>
     );
 }
 

@@ -1,9 +1,13 @@
-import React, {FC} from 'react';
+import React from 'react';
+import Box from "@mui/material/Box";
+import Genres from "./genres";
 
-const Sidebar:FC = () => {
+const Sidebar = () => {
     return (
-        <div>
-        </div>
+        <Box sx={{width:'sm'}}>
+            Sidebar
+            <Genres />
+        </Box>
     );
 }
 
