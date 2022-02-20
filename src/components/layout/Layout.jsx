@@ -4,7 +4,7 @@ import Sidebar from "./Sidebar";
 import Footer from "./Footer";
 import {Container, Grid} from "@mui/material";
 
-const Layout:FC = ({children}) => {
+const Layout = ({children}) => {
     return (
         <>
             <Header/>

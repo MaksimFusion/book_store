@@ -35,7 +35,7 @@ export default function Genres() {
                                     <ListItemText
                                         primary="Single-line item"
                                     />
-                                </ListItem>,
+                                </ListItem>
                             )}
                         </List>
                     </Demo>
