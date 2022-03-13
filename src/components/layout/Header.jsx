@@ -12,8 +12,8 @@ import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import ImageAvatars from "./avatar";
-import CustomizedBadges from "./basket";
+import ImageAvatars from "../utils/avatar";
+import CustomizedBadges from "../utils/basket";
 import {Container} from "@mui/material";
 
 const Search = styled('div')(({ theme }) => ({
@@ -55,7 +55,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function Header() {
+export default function Header () {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
