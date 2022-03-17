@@ -2,32 +2,35 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import {FC} from "react";
-import BasicRating from "./rating";
 import ButtonBasket from "./button_basket";
 import Box from "@mui/material/Box";
+import {IBook} from "../../store/reducers/book/types";
+import {NavLink} from "react-router-dom";
+import {BOOK_ROUTE} from "./consts";
 
-const Book = ({book}) => {
+interface IBookProps {
+    book: IBook;
+}
+
+const BookItem: FC <IBookProps> = ({book}) => {
+
     return (
         <Box sx={{p:1, width:200}}>
         <Card sx={{ textAlign: "center"}}>
-            <CardMedia
-                component="img"
-                alt={book.name}
-                image={book.img}
-                sx={{p:1}}
-            />
+            <NavLink to={BOOK_ROUTE + "/" + book.id}>
+                <img src={book.img}></img>
+            </NavLink>
+
             <CardContent>
-                <BasicRating/>
                 <Typography gutterBottom variant="subtitle2" component="div">
                     {book.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                     {book.author}
                 </Typography>
-                <Typography variant="h7" color="#1976d2">
+                <Typography variant="h6" color="#1976d2">
                     {book.price + "₽"}
                 </Typography>
             </CardContent>
@@ -38,4 +41,4 @@ const Book = ({book}) => {
         </Box>
     );
 }
-export default Book;
+export default BookItem;

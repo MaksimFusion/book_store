@@ -7,10 +7,7 @@ export const fetchBooks = (searchParams: URLSearchParams) => {
     return async (dispatch: Dispatch<BookAction>) => {
         try {
             dispatch({type: ActionEnum.FETCH_BOOKS})
-            let url = "api/book/?" + searchParams.toString()
-            const response = await $host.get("api/book", {
-                params: Object.fromEntries(searchParams),
-            })
+            const response = await $host.get("api/book")
                 dispatch({
                              type: ActionEnum.FETCH_BOOKS_SUCCESS, payload: response.data
                          });
@@ -22,3 +19,12 @@ export const fetchBooks = (searchParams: URLSearchParams) => {
         }
     }
 }
+export const updateRating = async (reqData: any) => {
+    const {data} = await $host.post("api/book/rating", reqData)
+    return data
+}
+
+export const fetchOneBook = async (id: string) => {
+    const response = await $host.get("api/book/" + id);
+    return response.data;
+};

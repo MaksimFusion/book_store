@@ -22,6 +22,7 @@ const Book = sequelize.define('book', {
     price: {type: DataTypes.INTEGER, allowNull: false},
     rating: {type: DataTypes.INTEGER, defaultValue: 0},
     img: {type: DataTypes.STRING, allowNull: false},
+
 })
 
 const Genre = sequelize.define('genre', {
@@ -40,9 +41,16 @@ const Rating = sequelize.define('rating', {
 })
 
 const BookInfo = sequelize.define('book_info', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, foreignKey: true},
+    publishing_house:{type: DataTypes.STRING, allowNull: false},
+    language: {type: DataTypes.STRING, allowNull: false},
+    year_of_publication: {type: DataTypes.STRING, allowNull: false},
+    number_of_pages: {type: DataTypes.INTEGER, allowNull: false}
+})
+const Comment = sequelize.define('comment', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    title: {type: DataTypes.STRING, allowNull: false},
-    description: {type: DataTypes.STRING, allowNull: false},
+    parrentId: { type: DataTypes.INTEGER, allowNull: false },
+    text: { type: DataTypes.STRING, allowNull: false },
 })
 
 const GenreAuthor = sequelize.define('genre_author', {
@@ -55,17 +63,26 @@ Basket.belongsTo(User)
 User.hasMany(Rating)
 Rating.belongsTo(User)
 
+User.hasMany(Comment)
+Comment.belongsTo(User)
+
 Basket.hasMany(BasketBook)
 BasketBook.belongsTo(Basket)
 
 Genre.hasMany(Book)
 Book.belongsTo(Genre)
 
+Book.hasMany(BookInfo)
+BookInfo.belongsTo(Book)
+
 Author.hasMany(Book)
 Book.belongsTo(Author)
 
 Book.hasMany(Rating)
 Rating.belongsTo(Book)
+
+Book.hasMany(Comment)
+Comment.belongsTo(Book)
 
 Book.hasMany(BasketBook)
 BasketBook.belongsTo(Book)
@@ -82,4 +99,5 @@ module.exports = {
     Author,
     Rating,
     GenreAuthor,
+    BookInfo
 }

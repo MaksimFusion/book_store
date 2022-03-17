@@ -3,7 +3,7 @@ import {ActionEnum, IUserState, UserAction} from "./types";
 const initialState: IUserState = {
     isAuth: true,
     user: null,
-    error: ""
+    error: null
 }
 
 export default function authReducer(state = initialState, action: UserAction): IUserState {

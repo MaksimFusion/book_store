@@ -4,7 +4,7 @@ export type IGenre = {
 };
 
 export interface IGenresState {
-    genres: IGenre | [] | null;
+    genres: IGenre[];
     loading: boolean;
     selectedGenres: { id: number | null };
     error: null | string;

@@ -8,7 +8,7 @@ class BookController {
         try {
             const {name, price, authorId, genreId} = req.body
             const {img} = req.files
-            let fileName = uuid.v4() + ".jpg"
+            let fileName = "img_" + uuid.v4() + ".jpg"
             img.mv(path.resolve(__dirname, '..', 'static', fileName))
 
             const book = await Book.create({name, price, authorId, genreId, img: fileName})
@@ -42,7 +42,14 @@ class BookController {
 
     async getOne(req, res) {
         const {id} = req.params
-        const book = await Book.findOne({where:{id}})
+        const book = await Book.findByPk(id, {
+            include: [
+                "genre",
+                "author",
+                "rating",
+                { model: Comment, as: "comment", include: ["user"] },
+            ],
+        })
         return res.json(book)
     }
 }

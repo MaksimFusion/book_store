@@ -7,7 +7,7 @@ import './auth-form.css';
 import {loginValidation, passwordValidation} from './validation';
 import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import {HOME_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE} from "./consts";
-import {UserActionCreators} from "../../store/action_creators/auth";
+import {login, registration, setAuth, setUser} from "../../store/action_creators/auth";
 import {useDispatch} from "react-redux";
 
 interface ISignInForm {
@@ -31,13 +31,12 @@ export const AuthForm: React.FC = () => {
         try{
             let data:any;
             if (isLogin) {
-                 data = await UserActionCreators.login(email, password);
+                 data = await login(email, password);
             } else {
-                data = await UserActionCreators.registration(email, password);
+                data = await registration(email, password);
             }
-            dispatch(UserActionCreators.setUser(data))
-            dispatch(UserActionCreators.setIsLoading(true))
-            dispatch(UserActionCreators.setIsAuth(true))
+            dispatch(setUser(data))
+            dispatch(setAuth(true))
             navigate(HOME_ROUTE)
         } catch (e) {
 

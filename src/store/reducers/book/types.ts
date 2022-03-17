@@ -1,27 +1,27 @@
-export type IComment = {
-    id: number | null;
-    text: string | null;
-    bookId: number | null;
-    userId: number | null;
-    parrentId: number | null;
-};
-
-export interface IBook {
-    id: number | null;
-    name: string | null;
-    price: number | null;
-    description: string | null;
-    img: string | null;
-    rating: any;
-    authorId: number | null;
-    genreId: number | null;
+export type IBook = {
+    id: number;
+    name: string;
+    price: number ;
+    description: string ;
+    img: string ;
+    rating: any[];
+    authorId: number;
+    genreId: number;
     comment: IComment[];
     author: { id: number; name: string };
     genre: { id: number; name: string };
 }
 
+export type IComment = {
+    id: number ;
+    text: string ;
+    bookId: number ;
+    userId: number ;
+    parrentId: number;
+};
+
 export interface IBookState{
-    books: null | {page: number; limit: number };
+    books: null | {rows: any[]; page: number; limit: number, count: number; };
     loading: boolean;
     error: string | null
 }

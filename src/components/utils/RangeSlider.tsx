@@ -2,17 +2,50 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import Typography from "@mui/material/Typography";
+import {FC, useEffect} from "react";
+import { useSearchParams } from "react-router-dom";
 
-function valuetext(value: number) {
-    return `${value}°C`;
-}
+const minPrice = 0;
+const maxPrice = 1000;
+let min = 0;
+let max = 1000;
+const stepPrice = 10;
+const minDistance = 100;
 
-export default function RangeSlider() {
-    const [value, setValue] = React.useState<number[]>([20, 37]);
+const RangeSlider: FC = () => {
 
-    const handleChange = (event: Event, newValue: number | number[]) => {
-        setValue(newValue as number[]);
+    const [value, setValue] = React.useState<number[]>([min, max]);
+    let [searchParams, setSearchParams] = useSearchParams();
+
+    useEffect(() => {
+        if (searchParams.get("min") && searchParams.get("max")) {
+            min = Number(searchParams.get("min"));
+            max = Number(searchParams.get("max"));
+            setValue([min, max]);
+        }
+    }, []);
+
+    const handleChange = (event: Event, newValue: number | number[], activeThumb: number) => {
+        if (!Array.isArray(newValue)) {
+            return;
+        }
+        if (activeThumb === 0) {
+            setValue([Math.min(newValue[0], value[1] - minDistance), value[1]]);
+        } else {
+            setValue([value[0], Math.max(newValue[1], value[0] + minDistance)]);
+        }
     };
+
+const handleCommitted = () => {
+    if (value[0] === minPrice && value[1] === maxPrice) {
+        searchParams.delete("min");
+        searchParams.delete("max");
+    }
+    searchParams.set("min", `${value[0]}`);
+    searchParams.set("max", `${value[1]}`);
+    searchParams.delete("page");
+    setSearchParams(searchParams);
+};
 
     return (
 
@@ -27,9 +60,14 @@ export default function RangeSlider() {
                 getAriaLabel={() => 'price range'}
                 value={value}
                 onChange={handleChange}
-                valueLabelDisplay="auto"
-                getAriaValueText={valuetext}
+                onChangeCommitted={handleCommitted}
+                min={minPrice}
+                max={maxPrice}
+                step={stepPrice}
+                disableSwap
             />
         </Box>
     );
 }
+
+export default RangeSlider

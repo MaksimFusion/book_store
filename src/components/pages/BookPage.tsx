@@ -1,34 +1,55 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import Feedback from "../utils/feedback";
+import {useParams} from "react-router-dom";
+import {FC, useEffect, useState} from "react";
+import {fetchOneBook} from "../../store/action_creators/book";
+import {IBook} from "../../store/reducers/book/types";
+import CardMedia from "@mui/material/CardMedia";
 import ButtonBasket from "../utils/button_basket";
 import BasicRating from "../utils/rating";
-import Feedback from "../utils/feedback";
 import InfoBook from "../utils/infoBook";
 
-export default function BookPage() {
-    const book = {
-        id: 1,
-        name: "Три мушкетера",
-        author: "Дюма",
-        genre: "Приключение",
-        price: 211,
-        img: 'https://cv1.litres.ru/pub/c/elektronnaya-kniga/cover_415/122719-aleksandr-duma-tri-mushketera.jpg',
-        rating: 4
-    }
+
+const BookPage: FC = () => {
+    const params = useParams();
+    const [book, setBook] = useState<null | IBook>(null);
+
+    const getOneBook = () => {
+        if (params.id) {
+            fetchOneBook(params.id)
+                .then((response) => {
+                    setBook(response);
+                })
+                .catch((err) => alert(err))
+                .finally(() => {});
+        }
+    };
+
+    useEffect(() => {
+        getOneBook();
+    }, []);
+
+
+    if(!book)
+        return (
+            <div>
+                <h5>Oшибка</h5>
+            </div>
+        )
     return (
         <Box sx={{flexGrow: 1, p: 7}}>
             <Grid container spacing={2} columns={16}>
                 <Grid xs={8} sx={{display:"flex", flexDirection:"column",  alignItems:"center"}}>
                     <Box sx={{display:"flex", flexDirection:"column"}}>
-                    <Typography variant="body2" color="#757575">
-                        {book.author}
-                    </Typography>
-                    <Typography variant="h5">
-                        {book.name}
-                    </Typography>
+                        <Typography variant="body2" color="#757575">
+                            {book.author.name}
+                        </Typography>
+                        <Typography variant="h5">
+                            {book.name}
+                        </Typography>
                     </Box>
                     <Box sx={{maxWidth: 200}}>
                         <CardMedia
@@ -50,7 +71,7 @@ export default function BookPage() {
                 <Grid xs={8} sx={{textAlign: "center"}}>
                     Рэйтинг книги:
                     <Box sx={{p: 1}}>
-                        <BasicRating/>
+                        <BasicRating book={book} getOneBook={getOneBook}/>
                     </Box>
                     <InfoBook />
                 </Grid>
@@ -70,3 +91,4 @@ export default function BookPage() {
         </Box>
     );
 }
+export default BookPage;

@@ -4,7 +4,7 @@ export type IAuthor = {
 };
 
 export interface IAuthorsState {
-    authors: IAuthor | [] | null;
+    authors: IAuthor[];
     loading: boolean;
     selectedAuthors: { id: number | null };
     error: null | string;
