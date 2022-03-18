@@ -2,6 +2,7 @@ import React, {FC} from 'react';
 import Typography from "@mui/material/Typography";
 import {Container} from "@mui/material";
 import Box from "@mui/material/Box";
+var uniqid = require('uniqid');
 
 const links = [
     "Мой аккаунт",
@@ -22,7 +23,7 @@ const Footer: FC = () => {
                 p: 5
             }}>
                 {links.map(item =>
-                    <Typography variant="h6" align="center">
+                    <Typography variant="h6" align="center" key={uniqid()}>
                         {item}
                     </Typography>)}
 

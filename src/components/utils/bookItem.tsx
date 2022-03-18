@@ -10,11 +10,11 @@ import {IBook} from "../../store/reducers/book/types";
 import {NavLink} from "react-router-dom";
 import {BOOK_ROUTE} from "./consts";
 
-interface IBookProps {
+interface Props {
     book: IBook;
 }
 
-const BookItem: FC <IBookProps> = ({book}) => {
+const BookItem: FC <Props> = ({book}) => {
 
     return (
         <Box sx={{p:1, width:200}}>

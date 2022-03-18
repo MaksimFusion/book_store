@@ -40,7 +40,7 @@ const Home: FC = () => {
                                     key={book.id}
                                     book={book}/>
                             </Grid>
-                        ) : "Ошибка"
+                        ) : "Ошибка!"
                     }
                 </Grid>
             </Grid>
