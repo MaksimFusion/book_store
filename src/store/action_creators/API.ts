@@ -1,22 +1,15 @@
-import * as axios from "axios";
-import {AxiosRequestConfig} from "axios";
+import axios from "axios";
 
-const $host = axios.default.create({
+const $host = axios.create({
     baseURL: process.env.REACT_APP_API_URL
 })
-const $authHost = axios.default.create({
+const $authHost = axios.create({
     baseURL: process.env.REACT_APP_API_URL
 })
 
-const authInterceptor = (config: AxiosRequestConfig): AxiosRequestConfig => {
-    const token = localStorage.getItem("accessToken");
-    if (token != null) {
-        config.headers = {
-            ...config.headers,
-            Authorization: `Bearer ${token}`,
-        }
-    }
-        return config;
+    const authInterceptor = (config: any) => {
+        config.headers.authorization = `Bearer ${localStorage.getItem('accessToken')}`
+        return config
 }
 $authHost.interceptors.request.use(authInterceptor)
 

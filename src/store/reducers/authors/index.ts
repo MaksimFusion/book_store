@@ -3,9 +3,6 @@ import {ActionEnum, AuthorsAction, IAuthorsState} from "./types";
 
 const initialState: IAuthorsState = {
     authors: [
-        {name: "Перумов", id:1},
-        {name: "Мартин", id:2},
-        {name: "Злотников", id:3},
     ],
     selectedAuthors: { id: null },
     loading: false,

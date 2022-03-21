@@ -23,7 +23,7 @@ export interface FetchGenresAction {
 
 export interface FetchGenresSuccessAction {
     type: ActionEnum.FETCH_GENRES_SUCCESS;
-    payload: any;
+    payload: any[];
 }
 
 export interface FetchGenresErrorAction {

@@ -2,16 +2,18 @@ const uuid = require('uuid')
 const path = require('path')
 const {Book} = require('../models/models')
 const ApiError = require('../error/ApiError')
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 class BookController {
     async create(req, res, next) {
         try {
             const {name, price, authorId, genreId} = req.body
             const {img} = req.files
-            let fileName = "img_" + uuid.v4() + ".jpg"
-            img.mv(path.resolve(__dirname, '..', 'static', fileName))
+            let imgName = "img_" + uuid.v4() + ".jpg"
+            img.mv(path.resolve(__dirname, '..', 'static', imgName))
 
-            const book = await Book.create({name, price, authorId, genreId, img: fileName})
+            const book = await Book.create({name, price, authorId, genreId, img: imgName})
 
             return res.json(book)
         } catch (e) {
@@ -20,37 +22,53 @@ class BookController {
     }
 
     async getAll(req, res) {
-        let {authorId, genreId, limit, page} = req.query
+        let {min, max, limit, page} = req.query
+        if (page <=0){page = 1}
+
         page = page || 1
         limit = limit || 12
-        let offset = page * limit - limit
-        let books;
-        if (!authorId && !genreId) {
-            books = await Book.findAndCountAll({limit, offset})
+        let offset = page * limit - limit;
+        let where = {}
+
+        if (min && max) {
+where.price = {[Op.between]: [+(min), +(max)]}
         }
-        if (authorId && !genreId) {
-            books = await Book.findAndCountAll({where: {authorId}, limit, offset})
+
+        if (req.query.author) {
+            let author = String(req.query.author).split(",");
+            where.authorId = author;
         }
-        if (!authorId && genreId) {
-            books = await Book.findAndCountAll({where: {genreId}, limit, offset})
+
+        if (req.query.genre) {
+            let genre = String(req.query.genre).split(",");
+            where.genreId = genre;
         }
-        if (authorId && genreId) {
-            books = await Book.findAndCountAll({where: {authorId, genreId}, limit, offset})
-        }
+
+        let books = await Book.findAndCountAll({
+            include: ["genre", "author"],
+            where,
+            limit,
+            offset,
+            distinct: true,
+        });
+
+        books.page = page;
+        books.limit = limit;
+
         return res.json(books)
     }
 
-    async getOne(req, res) {
-        const {id} = req.params
-        const book = await Book.findByPk(id, {
-            include: [
-                "genre",
-                "author",
-                "rating",
-                { model: Comment, as: "comment", include: ["user"] },
-            ],
-        })
-        return res.json(book)
+    async getOne(req, res, next) {
+        try{
+            const {id} = req.params
+            const book = await Book.findByPk(id, {
+                include: ["genre","author"    ],
+            })
+            return res.json(book)
+        } catch (e){
+            next(ApiError.badRequest(e.message));
+        }
+
     }
 }
 

@@ -23,7 +23,7 @@ export interface FetchAuthorsAction {
 
 export interface FetchAuthorsSuccessAction {
     type: ActionEnum.FETCH_AUTHORS_SUCCESS;
-    payload: any;
+    payload: any[];
 }
 
 export interface FetchAuthorsErrorAction {

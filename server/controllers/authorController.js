@@ -1,5 +1,4 @@
 const {Author} = require("../models/models");
-const ApiError = require('../error/ApiError')
 
 class AuthorController {
     async create(req, res){
@@ -8,7 +7,8 @@ class AuthorController {
         return res.json(author)
     }
     async getAll(req, res){
-
+        const authors = await Author.findAll();
+        return res.json(authors);
     }
 }
 

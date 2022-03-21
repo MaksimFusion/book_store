@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import {IBook} from "../../store/reducers/book/types";
 import {NavLink} from "react-router-dom";
 import {BOOK_ROUTE} from "./consts";
+import CardMedia from "@mui/material/CardMedia";
 
 interface Props {
     book: IBook;
@@ -17,24 +18,29 @@ interface Props {
 const BookItem: FC <Props> = ({book}) => {
 
     return (
-        <Box sx={{p:1, width:200}}>
-        <Card sx={{ textAlign: "center"}}>
+        <Box sx={{p:1, }}>
+        <Card sx={{ textAlign: "center", width:190, height:400}}>
             <NavLink to={BOOK_ROUTE + "/" + book.id}>
-                <img src={book.img}></img>
+                <CardMedia
+                component="img"
+                alt={book.name}
+                image={process.env.REACT_APP_API_URL + book.img}
+                sx={{p: 1}}
+            />
             </NavLink>
 
-            <CardContent>
+            <CardContent sx={{p:1}}>
                 <Typography gutterBottom variant="subtitle2" component="div">
                     {book.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    {book.author}
+                    {book.author.name}
                 </Typography>
                 <Typography variant="h6" color="#1976d2">
                     {book.price + "₽"}
                 </Typography>
             </CardContent>
-            <CardActions sx={{justifyContent: "center"}}>
+            <CardActions sx={{justifyContent: "center", }}>
                 <ButtonBasket />
             </ CardActions>
         </Card>
@@ -42,3 +48,4 @@ const BookItem: FC <Props> = ({book}) => {
     );
 }
 export default BookItem;
+

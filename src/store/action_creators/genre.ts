@@ -19,6 +19,7 @@ export const fetchGenres = () => {
         }
     }
 }
+
 export const setSelectedGenres = (id:number) => {
     return (dispatch: Dispatch<GenresAction>) => {
         dispatch({type:ActionEnum.SET_SELECTED_GENRES, payload: id})

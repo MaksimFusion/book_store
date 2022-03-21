@@ -1,4 +1,4 @@
-import {InputLabel, ListItemText, OutlinedInput, Select, SelectChangeEvent} from '@mui/material';
+import {ListItemText} from '@mui/material';
 import React, {FC, useEffect, useRef} from 'react';
 import {useTypedSelector} from "../hooks/reduxHooks";
 import {useDispatch} from "react-redux";
@@ -45,31 +45,12 @@ const Genre: FC = () => {
         }
     }, [genreId]);
 
-    const handleChange = (event: SelectChangeEvent<typeof genreId>) => {
-        const {
-            target: {value},
-        } = event;
-        setGenreId(
-            typeof value === "string" ? value.split(",") : value
-        );
-    };
     return (
         <div>
-            <InputLabel id="genre-select-lebel">Genre</InputLabel>
-            <Select
-                labelId="genre-select-lebel"
-                id="genre-select"
-                multiple
-                value={genreId}
-                onChange={handleChange}
-                input={<OutlinedInput label="Genre"/>}
-            >
-                {genres.map((genre) =>
-                    <ListItemText key={genre.id} primary={genre.name}/>
-                )}
-            </Select>
+                    {genres.map((genre) =>
+                        <ListItemText key={genre.id} primary={genre.name} />
+                    )}
         </div>
     )
 }
-
 export default Genre;

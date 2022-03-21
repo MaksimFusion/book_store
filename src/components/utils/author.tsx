@@ -1,4 +1,4 @@
-import {InputLabel, ListItemText, OutlinedInput, Select, SelectChangeEvent} from '@mui/material';
+import {ListItemText} from '@mui/material';
 import React, {FC, useEffect, useRef} from 'react';
 import {useTypedSelector} from "../hooks/reduxHooks";
 import {useDispatch} from "react-redux";
@@ -45,29 +45,12 @@ const Genre: FC = () => {
         }
     }, [authorId]);
 
-    const handleChange = (event: SelectChangeEvent<typeof authorId>) => {
-        const {
-            target: {value},
-        } = event;
-        setAuthorId(
-            typeof value === "string" ? value.split(",") : value
-        );
-    };
+
     return (
         <div>
-            <InputLabel id="genre-select-lebel">Author</InputLabel>
-            <Select
-                labelId="author-select-lebel"
-                id="author-select"
-                multiple
-                value={authorId}
-                onChange={handleChange}
-                input={<OutlinedInput label="Author"/>}
-            >
                 {authors.map((author) =>
                     <ListItemText key={author.id} primary={author.name}/>
                 )}
-            </Select>
         </div>
     )
 }

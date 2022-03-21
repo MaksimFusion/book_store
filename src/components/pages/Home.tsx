@@ -17,6 +17,7 @@ const Home: FC = () => {
         dispatch(fetchBooks(searchParams));
     }, [searchParams]);
 
+
     if (loading) {
         return (
             <div>
@@ -35,7 +36,7 @@ const Home: FC = () => {
                 <Grid container spacing={{xs: 1, md: 3}} columns={{xs: 4, sm: 6, md: 20}}>
                     {books ?
                         books.rows.map(book =>
-                            <Grid xs={5}>
+                            <Grid xs={5} >
                                 <BookItem
                                     key={book.id}
                                     book={book}/>

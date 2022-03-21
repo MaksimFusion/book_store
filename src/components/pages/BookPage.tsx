@@ -56,7 +56,7 @@ const BookPage: FC = () => {
                             component="img"
                             alt={book.name}
                             max-height="100"
-                            image={book.img}
+                            image={process.env.REACT_APP_API_URL + book.img}
                             sx={{p: 1}}
                         />
                         <Typography variant="h6" color="#1976d2" sx={{textAlign: "center"}}>

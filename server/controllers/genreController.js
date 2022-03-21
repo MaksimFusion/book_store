@@ -1,5 +1,4 @@
 const {Genre} = require('../models/models')
-const ApiError = require('../error/ApiError')
 
 
 class GenreController {
@@ -10,7 +9,8 @@ class GenreController {
     }
 
     async getAll(req, res) {
-
+        const genres = await Genre.findAll();
+        return res.json(genres);
     }
 }
 

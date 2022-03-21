@@ -3,16 +3,13 @@ import {ActionEnum, GenresAction, IGenresState} from "./types";
 
 const initialState: IGenresState = {
     genres: [
-        {name: "Фантастика", id:1},
-        {name: "Приключение", id:2},
-        {name: "Детектив", id:3},
     ],
     selectedGenres: { id: null },
     loading: false,
     error: null,
 }
 
-export default function authorsReducer(state = initialState, action: GenresAction): IGenresState {
+export default function genresReducer(state = initialState, action: GenresAction): IGenresState {
     switch (action.type) {
         case ActionEnum.FETCH_GENRES:
             return {...state, loading: true, error: null, genres: []}

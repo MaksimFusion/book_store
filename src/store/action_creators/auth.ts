@@ -38,20 +38,18 @@ export const registration = async (email: string,password: string) => {
 };
 
 export const login = async (email: string, password: string) => {
-    const response = await $host.post("api/user/login", {
+    const { data } = await $host.post("api/user/login", {
         email,
         password,
     });
-    localStorage.setItem("accessToken", response.data.token);
-    const { data } = response;
+    localStorage.setItem("accessToken", data.token);
     const token_decode: any = jwt_decode(data.token);
     return token_decode.user;
 };
 
 export const check = async () => {
-    const response = await $authHost.get("api/user/auth");
-    localStorage.setItem('accessToken', response.data.token)
-    const { data } = response;
+    const {data} = await $authHost.get("api/user/auth");
+    localStorage.setItem('accessToken', data.token)
     const token_decode: any = jwt_decode(data.token);
     return token_decode.user;
 };
